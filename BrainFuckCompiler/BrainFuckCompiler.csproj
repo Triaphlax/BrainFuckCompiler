@@ -51,6 +51,8 @@
     <Compile Include="ActualWindow.Designer.cs">
       <DependentUpon>ActualWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputParser.cs" />
+    <Compile Include="Instruction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ActualWindow.resx">
