@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrainFuckCompiler
 {
-    public enum InstructionType { ValueUp, ValueDown, PointerUp, PointerDown, GetUserInput, ReturnValue, LoopBegin, LoopEnd, ERROR };
+    public enum InstructionType { ValueUp, ValueDown, PointerUp, PointerDown, GetUserInput, ReturnValue, LoopBegin, LoopEnd };
 
     class Instruction
     {
@@ -24,7 +24,7 @@ namespace BrainFuckCompiler
 
         public int getGotoLine()
         { 
-            //TODO Exception if called by non Loop type
+            if(iType == InstructionType.LoopBegin || iType == InstructionType.LoopEnd) { throw new GotoForNonLoopCalledException(); }
             return gotoLine;
         }
 
