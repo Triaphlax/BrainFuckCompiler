@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BrainFuckCompiler
 {
-    public enum InstructionType { ValueUp, ValueDown, PointerUp, PointerDown, GetUserInput, ReturnValue, LoopBegin, LoopEnd };
+    public enum InstructionType { ValueUp, ValueDown, PointerUp, PointerDown, GetUserInput, ReturnValue, LoopBegin, LoopEnd, ERROR };
 
     class Instruction
     {
         private InstructionType iType;
         private int gotoLine = -1;
 
-        public Instruction(InstructionType iType, int gotoLine)
+        public Instruction(InstructionType iType, int gotoLine=-1)
         {
             this.iType = iType;
             if (iType == InstructionType.LoopBegin || iType == InstructionType.LoopEnd)
@@ -23,7 +23,8 @@ namespace BrainFuckCompiler
         }
 
         public int getGotoLine()
-        {
+        { 
+            //TODO Exception if called by non Loop type
             return gotoLine;
         }
 
