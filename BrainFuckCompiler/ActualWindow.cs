@@ -15,16 +15,21 @@ namespace BrainFuckCompiler
 		public ActualWindow()
 		{
 			InitializeComponent();
-		}
+        }
 
-		private void startButton_Click(object sender, EventArgs e)
+        private void ActualWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void ActualWindow_Load(object sender, EventArgs e)
-		{
+        private void stopButton_Click(object sender, EventArgs e)
+        {
 
-		}
-	}
+        }
+    }
 }
