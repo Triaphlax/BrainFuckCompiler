@@ -34,12 +34,12 @@ namespace BrainFuckCompiler
                 }
                 else if (c == ']')
                 {
-                    if(parenthesesCounter == 0) { /*TODO Throw Exception*/ }
+                    if(parenthesesCounter == 0) { throw new InvalidParenthesesException(); }
                     parenthesesCounter--;
                 }
             }
 
-            if(parenthesesCounter != 0) { /*TODO Throw Exception*/ }
+            if(parenthesesCounter != 0) { throw new InvalidParenthesesException(); }
         }
 
         static public Instruction[] makeInstructionList(string input)
@@ -50,7 +50,6 @@ namespace BrainFuckCompiler
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
-                InstructionType iType;
                 switch (c)
                 {
                     case '<': instructionList[i] = new Instruction(InstructionType.PointerDown); break;
@@ -69,7 +68,7 @@ namespace BrainFuckCompiler
                         instructionList[pointerToLoopBegin] = new Instruction(InstructionType.LoopBegin, i);
                         break;
 
-                    default: iType = InstructionType.ERROR; break; //TODO Exception
+                    default: throw new InvalidCharacterException();
                 }
             }
 
