@@ -64,6 +64,7 @@ namespace BrainFuckCompiler
                         break;
                     case ']':
                         int pointerToLoopBegin = gotoLinesLoopBegin[gotoLinesLoopBegin.Count - 1];
+                        gotoLinesLoopBegin.RemoveAt(gotoLinesLoopBegin.Count - 1);
                         instructionList[i] = new Instruction(InstructionType.LoopEnd, pointerToLoopBegin);
                         instructionList[pointerToLoopBegin] = new Instruction(InstructionType.LoopBegin, i);
                         break;
