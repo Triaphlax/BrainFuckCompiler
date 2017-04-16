@@ -23,28 +23,53 @@ namespace BrainFuckCompiler
             return sb.ToString();
         }
 
+        static public void checkParenthesesValidility(string input)
+        {
+            int parenthesesCounter = 0;
+            foreach (char c in input)
+            {
+                if(c == '[')
+                {
+                    parenthesesCounter++;
+                }
+                else if (c == ']')
+                {
+                    if(parenthesesCounter == 0) { /*TODO Throw Exception*/ }
+                    parenthesesCounter--;
+                }
+            }
+
+            if(parenthesesCounter != 0) { /*TODO Throw Exception*/ }
+        }
+
         static public Instruction[] makeInstructionList(string input)
         {
             Instruction[] instructionList = new Instruction[input.Length];
+            List<int> gotoLinesLoopBegin = new List<int>();
 
-            for(int i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
                 InstructionType iType;
                 switch (c)
                 {
-                    case '<': iType = InstructionType.PointerDown; break;
-                    case '>': iType = InstructionType.PointerUp; break;
-                    case '+': iType = InstructionType.ValueUp; break;
-                    case '-': iType = InstructionType.ValueDown; break;
-                    case '.': iType = InstructionType.ReturnValue; break;
-                    case ',': iType = InstructionType.GetUserInput; break;
-                    case '[': iType = InstructionType.LoopBegin; break;
-                    case ']': iType = InstructionType.LoopEnd; break;
+                    case '<': instructionList[i] = new Instruction(InstructionType.PointerDown); break;
+                    case '>': instructionList[i] = new Instruction(InstructionType.PointerUp); break;
+                    case '+': instructionList[i] = new Instruction(InstructionType.ValueUp); break;
+                    case '-': instructionList[i] = new Instruction(InstructionType.ValueDown); break;
+                    case '.': instructionList[i] = new Instruction(InstructionType.ReturnValue); break;
+                    case ',': instructionList[i] = new Instruction(InstructionType.GetUserInput); break;
+                    case '[':
+                        gotoLinesLoopBegin.Add(i);
+                        break;
+                    case ']':
+                        int pointerToLoopBegin = gotoLinesLoopBegin[gotoLinesLoopBegin.Count - 1];
+                        instructionList[i] = new Instruction(InstructionType.LoopEnd, pointerToLoopBegin);
+                        instructionList[pointerToLoopBegin] = new Instruction(InstructionType.LoopBegin, i);
+                        break;
+
                     default: iType = InstructionType.ERROR; break; //TODO Exception
                 }
-
-                instructionList[i] = new Instruction(iType);
             }
 
             return instructionList;
